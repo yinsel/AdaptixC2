@@ -1,0 +1,12 @@
+services:
+  adaptixC2:
+    container_name: adaptixC2
+    image: adaptixc2:v0.7
+    network_mode: host
+    volumes:
+      - ./profile.json:/app/profile.json
+      - ./403page.html:/app/403.page.html
+      - ./server.rsa.crt:/app/server.rsa.crt
+      - ./server.rsa.key:/app/server.rsa.key
+      - /opt/AdaptixC2:/AdaptixC2
+    command: ["./adaptixserver", "-profile", "profile.json"]
