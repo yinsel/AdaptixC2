@@ -1,7 +1,7 @@
 services:
   adaptixC2:
     container_name: adaptixC2
-    image: adaptixc2:v0.7
+    image: adaptixc2:latest
     network_mode: host
     volumes:
       - ./profile.json:/app/profile.json
