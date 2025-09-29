@@ -23,13 +23,12 @@
     "refresh_token_live_hours": 168
   },
   "ServerResponse": {
-    "status": 404,
+    "status": 403,
     "headers": {
       "Content-Type": "text/html; charset=UTF-8",
-      "Server": "AdaptixC2",
-      "Adaptix Version": "v0.9"
+      "Server": "openrestry",
     },
-    "page": "404page.html"
+    "page": "403page.html"
   },
   "EventCallback": {
     "Telegram": {
