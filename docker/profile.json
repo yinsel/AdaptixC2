@@ -19,10 +19,10 @@
   },
 
   "ServerResponse": {
-    "status": 403,
+    "status": 404,
     "headers": {
       "Content-Type": "text/html; charset=UTF-8",
-      "Server": "openresty"
+      "Server": "openrestry"
     },
     "page": "403page.html"
   },
@@ -32,6 +32,12 @@
       "token": "",
       "chats_id": []
     },
-    "new_agent_message": "New agent: %type% (%id%)\n\n%user% @ %computer% (%internalip%)\nelevated: %elevated%\nfrom: %externalip%\ndomain: %domain%"
+    "Webhooks": [
+      {
+      }
+    ],
+    "new_agent_message": "New agent: %type% (%id%)\n\n%user% @ %computer% (%internalip%)\nelevated: %elevated%\nfrom: %externalip%\ndomain: %domain%",
+    "new_cred_message": "New secret [%type%]:\n\n%username% : %password% (%domain%)\n\nStorage: %storage%\nHost: %host%",
+    "new_download_message":"File saved: %path% [%size%] from %computer% (%user%)"
   }
 }
