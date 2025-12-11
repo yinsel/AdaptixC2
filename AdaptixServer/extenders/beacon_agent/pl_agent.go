@@ -1133,7 +1133,7 @@ func ProcessTasksResult(ts Teamserver, agentData adaptix.AgentData, taskData ada
 			path := ConvertCpToUTF8(packer.ParseString(), agentData.ACP)
 			fileContent := packer.ParseBytes()
 			task.Message = fmt.Sprintf("'%v' file content:", path)
-			task.ClearText = string(fileContent)
+			task.ClearText = ConvertCpToUTF8(string(fileContent), agentData.ACP)
 
 		case COMMAND_CD:
 			if false == packer.CheckPacker([]string{"array"}) {
