@@ -1,12 +1,27 @@
+name: AdaptixC2
+
 services:
-  adaptixC2:
-    container_name: adaptixC2
-    image: adaptixc2:latest
+  # Run server (runtime)
+  adaptix-server-runtime:
+    image: adaptixc2:runtime-go1.25.4
+    container_name: adaptix
     network_mode: host
     volumes:
-      - ./profile.json:/app/profile.json
-      - ./403page.html:/app/403page.html
-      - ./server.rsa.crt:/app/server.rsa.crt
-      - ./server.rsa.key:/app/server.rsa.key
-      - ./data:/app/data
-    command: ["./adaptixserver", "-profile", "profile.json"]
+      - ./server-dist/data:/app/data
+      - ./server-dist/myprofile.json:/app/myprofile.json:ro
+      - ./server-dist/mypage.html:/app/mypage.html:ro
+    environment:
+      - TZ=${TZ:-UTC}
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '1.0'
+          memory: 1G
+
+volumes:
+  adaptix-data:
+    driver: local

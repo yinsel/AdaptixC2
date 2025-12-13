@@ -23,12 +23,12 @@
     "refresh_token_live_hours": 168
   },
   "ServerResponse": {
-    "status": 403,
+    "status": 404,
     "headers": {
       "Content-Type": "text/html; charset=UTF-8",
       "Server": "openresty"
     },
-    "page": "403page.html"
+    "page": "mypage.html"
   },
   "EventCallback": {
     "Telegram": {
