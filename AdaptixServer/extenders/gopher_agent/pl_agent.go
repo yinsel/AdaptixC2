@@ -786,7 +786,7 @@ func ProcessTasksResult(ts Teamserver, agentData adaptix.AgentData, taskData ada
 					continue
 				}
 				task.Message = fmt.Sprintf("'%v' file content:", params.Path)
-				task.ClearText = string(params.Content)
+				task.ClearText = ConvertCpToUTF8(string(fileContent), agentData.ACP)
 
 			case COMMAND_CD:
 				var params AnsPwd
