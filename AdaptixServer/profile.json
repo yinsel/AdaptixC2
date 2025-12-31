@@ -25,9 +25,7 @@
   "ServerResponse": {
     "status": 404,
     "headers": {
-      "Content-Type": "text/html; charset=UTF-8",
-      "Server": "AdaptixC2",
-      "Adaptix Version": "v1.0"
+      "Content-Type": "text/html; charset=UTF-8"
     },
     "page": "404page.html"
   },

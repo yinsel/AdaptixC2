@@ -1,6 +1,10 @@
 FROM golang:1.25-bookworm AS base
 
-RUN apt-get update && \
+ENV GOPROXY=https://mirrors.aliyun.com/goproxy/,direct
+
+RUN sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources && \ 
+    sed -i 's/security.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources && \
+    apt-get update && \
     apt-get install -y --no-install-recommends \
         mingw-w64 \
         g++-mingw-w64 \
@@ -47,7 +51,11 @@ RUN make server && make extenders
 # ============================================
 FROM debian:bookworm-slim AS runtime
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+ENV GOPROXY=https://mirrors.aliyun.com/goproxy/,direct
+
+RUN sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources && \ 
+    sed -i 's/security.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources && \
+    apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     mingw-w64 \
     g++-mingw-w64 \
@@ -59,14 +67,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-RUN wget https://go.dev/dl/go1.25.4.linux-amd64.tar.gz -O /tmp/go1.25.4.linux-amd64.tar.gz && \
+RUN wget https://mirrors.aliyun.com/golang/go1.25.4.linux-amd64.tar.gz -O /tmp/go1.25.4.linux-amd64.tar.gz && \
     rm -rf /usr/local/go /usr/local/bin/go && \
     tar -C /usr/local -xzf /tmp/go1.25.4.linux-amd64.tar.gz && \
     ln -s /usr/local/go/bin/go /usr/local/bin/go && \
     rm /tmp/go1.25.4.linux-amd64.tar.gz && \
     echo "[+] Go 1.25.4 installed successfully"
 
-RUN git clone https://github.com/Adaptix-Framework/go-win7 /tmp/go-win7 && \
+RUN git clone https://gh-proxy.org/https://github.com/Adaptix-Framework/go-win7 /tmp/go-win7 && \
     mv /tmp/go-win7 /usr/lib/ && \
     mkdir -p /usr/lib/go-win7/pkg/include && \
     cd /usr/lib/go-win7/src/runtime && \
@@ -75,19 +83,13 @@ RUN git clone https://github.com/Adaptix-Framework/go-win7 /tmp/go-win7 && \
 
 WORKDIR /app
 
-COPY ./AdaptixServer/server-dist/adaptixserver /app/adaptixserver
-COPY ./AdaptixServer/server-dist/profile.json /app/profile.json
-COPY ./AdaptixServer/server-dist/404page.html /app/404page.html
-COPY ./AdaptixServer/server-dist/ssl_gen.sh /app/ssl_gen.sh
-COPY ./AdaptixServer/server-dist/extenders /app/extenders
-
 RUN mkdir -p /app/data && \
     echo '#!/bin/bash\n\
 set -e\n\
 echo "[*] Starting Adaptix C2 Server..."\n\
 if [ ! -f /app/server.rsa.crt ] || [ ! -f /app/server.rsa.key ]; then\n\
     echo "[*] Generating self-signed certificates..."\n\
-    cd /app && openssl req -x509 -nodes -newkey rsa:2048 -keyout server.rsa.key -out server.rsa.crt -days 3650 -subj "/C=US/ST=State/L=City/O=AdaptixC2/CN=localhost"\n\
+    cd /app && openssl req -x509 -nodes -newkey rsa:2048 -keyout server.rsa.key -out server.rsa.crt -days 3650 -subj "/C=CN/ST=/L=/O=/CN="\n\
     echo "[+] Certificates generated successfully"\n\
 fi\n\
 echo "[+] Launching Adaptix Server..."\n\
