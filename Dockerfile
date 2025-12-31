@@ -93,10 +93,10 @@ if [ ! -f /app/server.rsa.crt ] || [ ! -f /app/server.rsa.key ]; then\n\
     echo "[+] Certificates generated successfully"\n\
 fi\n\
 echo "[+] Launching Adaptix Server..."\n\
-exec "$@"' > /app/entrypoint.sh && \
-    chmod +x /app/entrypoint.sh
+exec "$@"' > /entrypoint.sh && \
+    chmod +x /entrypoint.sh
 
 EXPOSE 4321 80 443 8080 8443 8000 8888 50050-50055 9000-9002 7000-7010
 
-ENTRYPOINT ["/app/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/app/adaptixserver", "-profile", "/app/profile.json"]
