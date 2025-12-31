@@ -94,7 +94,8 @@ if [ ! -f /app/server.rsa.crt ] || [ ! -f /app/server.rsa.key ]; then\n\
 fi\n\
 echo "[+] Launching Adaptix Server..."\n\
 exec "$@"' > /entrypoint.sh && \
-    chmod +x /entrypoint.sh
+    chmod +x /entrypoint.sh && \
+    chmod +x /app/adaptixserver
 
 EXPOSE 4321 80 443 8080 8443 8000 8888 50050-50055 9000-9002 7000-7010
 
