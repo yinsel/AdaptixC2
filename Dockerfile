@@ -92,10 +92,10 @@ if [ ! -f /app/server.rsa.crt ] || [ ! -f /app/server.rsa.key ]; then\n\
     cd /app && openssl req -x509 -nodes -newkey rsa:2048 -keyout server.rsa.key -out server.rsa.crt -days 3650 -subj "/C=CN/ST=/L=/O=/CN="\n\
     echo "[+] Certificates generated successfully"\n\
 fi\n\
+chmod +x /app/adaptixserver\
 echo "[+] Launching Adaptix Server..."\n\
 exec "$@"' > /entrypoint.sh && \
-    chmod +x /entrypoint.sh && \
-    chmod +x /app/adaptixserver
+    chmod +x /entrypoint.sh
 
 EXPOSE 4321 80 443 8080 8443 8000 8888 50050-50055 9000-9002 7000-7010
 
